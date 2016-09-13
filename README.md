@@ -1,42 +1,44 @@
 RMASBench: Multi-Agent Coordination Benchmark
 =============================================
 
-This is a secondary repository of the RMASBench benchmarking tool.
-It was forked from the original [RMASBench repository](https://github.com/RMASBench/RMASBench.git) in order to develop the FGMD model.
-There's actually no code in this repository, but it contains git submodules of all necessary software to run the platform and all available algorithms.
+Esse é um repositório secundário do RMASBench, uma plataforma para avaliação de algoritmos de coordenação multiagente em cenários de desastre urbano.
+Parte do código-fonte disponibilizado aqui foi obtido no repositório oficial do [RMASBench](https://github.com/RMASBench/RMASBench.git).
+Adicionalmente, foi adicionado o modelo de formação de grupos pela minimização da distância (FGMD) que é otimizado com o algoritmo Binary Max-Sum desenvolvido por Pujol-Gonzalez.
 
-Requirements
+Além do FGMD, nesse repositório pode ser obtido todo o código-fonte do RMASBench, core do RoboCup Rescue e os algoritmos DSA, Max-Sum e Binary Max-Sum, contudo sugere-se verificar o repositório oficial para novas modificações.
+
+Requisitos
 ------------
 
-All software in the RSLBench platform is written in *java 1.7*. Hence, to compile and run it you need to have *java 1.7* installed and set as your default java platform. You can check your java version by running `java -version` in a terminal. You also need both `maven` and `ant` installed in your system to compile the different libraries.
+Todo o software na plataforma RSLBench é escrito em *java 1.7*. Portanto, para compilá-lo e executá-lo pode ser necessário ter o *java 1.7* instalado e configurado como plataforma java default. Você pode verificar a versão em uso através do comando `java -version` no terminal. Também é necessário ter `maven` e `ant` instalado no sistema para compilar as diferentes bibliotecas.
 
-The software is known to work in both *Mac OS X 10.7* with the *Oracle JDK*, and *Ubuntu GNU/linux* with *OpenJDK*. Unfortunately, no version of windows is supported at this time.
+O software funciona tanto em *Max OS X 10.7* com a *Oracle JDK*, e *Ubuntu GNU/linux* com *OpenJDK*. Infelizmente, nenhuma versão do windows é suportada até o momento.
 
-Installation
+Instalação
 ------------
 
-Check out this repository and all its submodules to your computer:
+Faça o checkout desse repositório e todos os submóduos no seu computador:
 
     git clone --recursive https://github.com/phdabel/RMASBench.git
 
-You will get an RMASBench folder containing 4 sub-folders (projects):
+Você terá um diretório RMASBench contendo 4 subdiretórios (projetos):
 
 - **BinaryMaxSum.** 
-    Library that implements a binary version of MaxSum, including special factors whose messages can be computed more efficiently.
+    Biblioteca que implementa uma versão do Binary MaxSum, incluindo fatores especiais (tractable high order potentials), cujas mensagens podem ser calculadas de forma mais eficiente.
 
 - **Maxsum.**
-    Library that implements the standard version of MaxSum.
+    Biblioteca que implementa a versão tradicional do MaxSum.
 
 - **RSLB2.**
-    Main tool of the RMASBench platform. This is where most of your work and test will take place, as it allows for an easy interfacing with the robocup rescue simulation platform.
+    Ferramenta principal da plataforma RMASBench. É onde a maior parte do trabalho e dos testes acontecerá, permitindo uma interface fácil com a plataforma de simulação RoboCup Rescue.
 
 - **BlockadeLoader.**
-    Addon simulator that loads blockade definitions from the map file and creates them at the start of the simulation.
+    Simulador adicional que carrega as definições de bloqueios dos arquivos dos mapas, criando-os no início da simulação.
 
 - **roborescue**
-    Robocup Rescue agent simulation platform.
+    A plataforma de simulação de agentes de resgate RoboCup Rescue.
 
-All this software must be compiled before being able to run the *RSLB2* tool. This can be easily achieved by using ant with the proper target for each subfolder:
+Todo o software deve ser compilado antes de estar pronto para execução. Isso pode ser feito usando `ant` adequadamente em cada subdiretório:
 
     cd RMASBench
     cd BinaryMaxSum; mvn -DskipTests package; cd ..
@@ -45,12 +47,10 @@ All this software must be compiled before being able to run the *RSLB2* tool. Th
     cd BlockadeLoader; ant jar; cd ..
     cd RSLB2; ant jar; cd ..
 
-If everything compiles well (you can ignore warnings, but not errors!), you are now ready to
-start testing. 
+Se tudo compilar bem (você pode ignorar os warnings, porém não os errors!), você estará pronto para começar a testar.
 
-
-Usage
------
+Uso
+---
 
 Normally, you will run experiments from within the *RSLB2/boot* folder. Get into that folder and check out the launcher's options:
 
