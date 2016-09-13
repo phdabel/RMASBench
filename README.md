@@ -1,7 +1,9 @@
 RMASBench: Multi-Agent Coordination Benchmark
 =============================================
 
-This is the main repository of the RMASBench benchmarking tool. There's actually no code in this repository, but it contains git submodules of all necessary software to run the platform and all available algorithms.
+This is a secondary repository of the RMASBench benchmarking tool.
+It was forked from the original [RMASBench repository](https://github.com/RMASBench/RMASBench.git) in order to develop the FGMD model.
+There's actually no code in this repository, but it contains git submodules of all necessary software to run the platform and all available algorithms.
 
 Requirements
 ------------
@@ -15,7 +17,7 @@ Installation
 
 Check out this repository and all its submodules to your computer:
 
-    git clone --recursive https://github.com/RMASBench/RMASBench.git
+    git clone --recursive https://github.com/phdabel/RMASBench.git
 
 You will get an RMASBench folder containing 4 sub-folders (projects):
 
@@ -121,10 +123,3 @@ Developing your coordination algorithm in RMASBench
 
 You can develop your coordination algorithm in RMASBench by using the coordination API.
 This [pdf](https://github.com/RMASBench/RSLB2/raw/master/docs/rmas_benchmark.pdf) document provides some (outdated) info on how to do this. Hence, it is probably better if you look at how current algorightms are implemented (greedy and random are especially easy to grasp).
-
-Resources
---------
-
-* [AAMAS 2013 Video](https://www.youtube.com/watch?v=39y6tkhv5O4)
-* [AAMAS 2013 Short Paper](http://www.ifaamas.org/Proceedings/aamas2013/docs/p1195.pdf)
-* [OptMAS 2014 Paper](http://www.cs.nmsu.edu/~wyeoh/optmas-dcr2014/docs/optmasdcr2014_submission_9.pdf)
