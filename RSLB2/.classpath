@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src/main/java"/>
+	<classpathentry kind="lib" path="dist/lib/bms-1.0.1-SNAPSHOT-all.jar"/>
+	<classpathentry kind="lib" path="dist/lib/jsi-1.0b2p1.jar"/>
+	<classpathentry kind="lib" path="dist/lib/kernel.jar"/>
+	<classpathentry kind="lib" path="dist/lib/log4j-1.2-api-2.0-beta7.jar"/>
+	<classpathentry kind="lib" path="dist/lib/log4j-api-2.0-beta7.jar"/>
+	<classpathentry kind="lib" path="dist/lib/log4j-core-2.0-beta7.jar"/>
+	<classpathentry kind="lib" path="dist/lib/mapdb-0.9.9.jar"/>
+	<classpathentry kind="lib" path="dist/lib/MaxSum.jar"/>
+	<classpathentry kind="lib" path="dist/lib/rescuecore2.jar"/>
+	<classpathentry kind="lib" path="dist/lib/standard.jar"/>
+	<classpathentry kind="lib" path="dist/lib/trove-0.1.8.jar"/>
+	<classpathentry kind="lib" path="dist/lib/trove-3.0.3.jar"/>
+	<classpathentry kind="lib" path="dist/lib/uncommons-maths-1.2.jar"/>
+	<classpathentry kind="lib" path="dist/RSLB2.jar"/>
+	<classpathentry kind="lib" path="lib/cglib-nodep-2.2.2.jar"/>
+	<classpathentry kind="lib" path="lib/CopyLibs/org-netbeans-modules-java-j2seproject-copylibstask.jar"/>
+	<classpathentry kind="lib" path="lib/javassist-3.18.1-GA.jar"/>
+	<classpathentry kind="lib" path="lib/junit_4/junit-4.10-javadoc.jar"/>
+	<classpathentry kind="lib" path="lib/junit_4/junit-4.10-sources.jar"/>
+	<classpathentry kind="lib" path="lib/junit_4/junit-4.10.jar"/>
+	<classpathentry kind="lib" path="lib/junit/junit-3.8.2.jar"/>
+	<classpathentry kind="lib" path="lib/log4j-1.2-api-2.0-beta7.jar"/>
+	<classpathentry kind="lib" path="lib/log4j-api-2.0-beta7.jar"/>
+	<classpathentry kind="lib" path="lib/log4j-core-2.0-beta7.jar"/>
+	<classpathentry kind="lib" path="lib/mapdb-0.9.9.jar"/>
+	<classpathentry kind="lib" path="lib/mockito-all-1.9.5.jar"/>
+	<classpathentry kind="lib" path="lib/objenesis-2.1.jar"/>
+	<classpathentry kind="lib" path="lib/powermock-mockito-1.5.3-full.jar"/>
+	<classpathentry kind="lib" path="lib/trove-3.0.3.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="build/classes"/>
+</classpath>

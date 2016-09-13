@@ -1,0 +1,26 @@
+# Ignore .o files
+*.o
+
+# Ignore .class files
+*.class
+
+# Ignore temporary files
+*~
+
+# Ignore log files
+*.log
+
+# Ignore the build and jars directories
+build/
+jars/
+jars-instrumented/
+
+# Ignore the oldsims jars
+lib/rescuecore.jar
+lib/resq-fire.jar
+
+# Ignore netbeans stuff
+nbproject/private/
+
+# Ignore rays files
+boot/rays/*

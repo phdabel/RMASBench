@@ -1,0 +1,31 @@
+# Folder to store dependency sources
+dependencies
+
+# Non-distributable scenarios
+scenarios/**/*.xml
+
+# Local logging setup
+supplement/*.xml
+supplement/*.properties
+
+# Run results
+boot/logs
+boot/results
+boot/export
+boot/*.png
+boot/**/*.cfg
+boot/*.gps
+boot/rays/*
+boot/cache/*
+
+# Log files
+run/logs
+
+# Compiled classes
+build
+
+# Generated jar
+dist
+
+# Private netbeans stuff
+nbproject/private
