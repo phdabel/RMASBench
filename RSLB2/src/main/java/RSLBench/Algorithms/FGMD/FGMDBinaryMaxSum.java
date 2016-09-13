@@ -31,9 +31,9 @@ public class FGMDBinaryMaxSum extends DCOPSolver {
 		
 		switch(type){
 			case FIRE_BRIGADE:
-				return null;
+				return new FGMDFireAgent();
 			case POLICE_FORCE:
-				return null;
+				return new FGMDPoliceAgent();
 			default:
 				throw new UnsupportedOperationException("Agents of type " + type + " are not supported by this solver.");
 		}
