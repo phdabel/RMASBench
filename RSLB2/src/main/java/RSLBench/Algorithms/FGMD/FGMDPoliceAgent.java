@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
+import RSLBench.Constants;
 import RSLBench.Algorithms.BMS.BinaryMaxSumMessage;
 import RSLBench.Algorithms.BMS.NodeID;
 import RSLBench.Algorithms.BMS.RSLBenchCommunicationAdapter;
@@ -45,7 +46,31 @@ public class FGMDPoliceAgent implements DCOPAgent {
 	
 	@Override
 	public void initialize(Config config, EntityID agentID, ProblemDefinition problem) {
-		// TODO Auto-generated method stub
+		Logger.trace("Initializing agent {}", agentID);
+
+        BLOCKED_PENALTY = problem.getConfig().getFloatValue(
+                Constants.KEY_BLOCKED_FIRE_PENALTY);
+        POLICE_ETA = problem.getConfig().getFloatValue(Constants.KEY_POLICE_ETA);
+
+        this.id = agentID;
+        this.targetId = null;
+        this.problem = problem;
+
+        // Reset internal structures
+        factors = new HashMap<>();
+        factorLocations = new HashMap<>();
+        communicationAdapter = new RSLBenchCommunicationAdapter(config);
+
+        // Build the variable node
+        addPoliceFactor();
+
+        // And the blockade factor nodes that correspond to this agent
+        addBlockadeFactors();
+
+        // Finally, compute the location of each factor in the simulation
+        computeFactorLocations();
+
+        Logger.trace("Agent {} initialized.", agentID);
 
 	}
 	
@@ -77,7 +102,7 @@ public class FGMDPoliceAgent implements DCOPAgent {
 			// ... and populate the utilities
 			double value = problem.getPoliceUtility(id, blockade);
 			if(problem.isPoliceAgentBlocked(id, blockade)){
-				value -= BLOCKED_PENALTY;
+				value += BLOCKED_PENALTY;
 			}
 			agentFactor.setPotential(blockadeID, value);
 			
