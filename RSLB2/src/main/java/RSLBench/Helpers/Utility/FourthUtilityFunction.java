@@ -16,11 +16,12 @@ import rescuecore2.worldmodel.EntityID;
 
 /**
  * Utility function that mimicks the pre-utility functions evaluation.
+ * This is a simple modification of the second utility function.
  *
- * @author Marc Pujol <mpujol@iiia.csic.es>
+ * @author Abel Correa <abel.correa@inf.ufrgs.br>
  */
-public class SecondUtilityFunction extends AbstractUtilityFunction {
-    private static final Logger Logger = LogManager.getLogger(SecondUtilityFunction.class);
+public class FourthUtilityFunction extends AbstractUtilityFunction {
+    private static final Logger Logger = LogManager.getLogger(FourthUtilityFunction.class);
 
     private Double maxDistance = null;
 
@@ -73,9 +74,6 @@ public class SecondUtilityFunction extends AbstractUtilityFunction {
 
         // Add some noise to break ties
         utility += config.getRandom().nextDouble()/10000;
-
-        // Downscale police utilities to subjugate them to fire agents
-        utility /= 1000;
 
         Logger.debug("Utility from police {} to blockade {}: {}", policeAgent, blockade, utility);
         return utility;

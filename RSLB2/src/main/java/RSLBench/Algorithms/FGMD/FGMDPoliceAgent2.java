@@ -10,7 +10,6 @@ import RSLBench.Algorithms.BMS.NodeID;
 import RSLBench.Algorithms.BMS.RSLBenchCommunicationAdapter;
 import RSLBench.Algorithms.BMS.factor.BMSAtMostOneFactor;
 import RSLBench.Algorithms.BMS.factor.BMSCardinalityFactor;
-import RSLBench.Algorithms.BMS.factor.BMSSelectorFactor;
 import RSLBench.Assignment.Assignment;
 import RSLBench.Assignment.DCOP.DCOPAgent;
 import RSLBench.Comm.CommunicationLayer;
@@ -27,21 +26,18 @@ import rescuecore2.worldmodel.EntityID;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class FGMDPoliceAgent implements DCOPAgent {
+public class FGMDPoliceAgent2 implements DCOPAgent {
 
-	private static final Logger Logger = LogManager.getLogger(FGMDPoliceAgent.class);
+	private static final Logger Logger = LogManager.getLogger(FGMDPoliceAgent2.class);
 	
 	private static final MaxOperator MIN_OPERATOR = new Minimize();
 	
 	private double BLOCKED_PENALTY;
 	private double POLICE_ETA;
 	
-	private final double w_j = 2.0;
-	
 	private EntityID id;
 	private ProblemDefinition problem;
-	private BMSSelectorFactor<NodeID> variableNode;
-	//private BMSAtMostOneFactor<NodeID> variableNode;
+	private BMSAtMostOneFactor<NodeID> variableNode;
 	private HashMap<NodeID, Factor<NodeID>> factors;
 	private HashMap<NodeID, EntityID> factorLocations;
 	private RSLBenchCommunicationAdapter communicationAdapter;
@@ -92,7 +88,7 @@ public class FGMDPoliceAgent implements DCOPAgent {
 	}
 	
 	private void addPoliceFactor(){
-		this.variableNode = new BMSSelectorFactor<>();
+		this.variableNode = new BMSAtMostOneFactor<>();
 		
 		// the agent's factor is the selector plus the independent utilities
 		// of this agent for each blockade
@@ -104,21 +100,13 @@ public class FGMDPoliceAgent implements DCOPAgent {
 			agentFactor.addNeighbor(blockadeID);
 			
 			// ... and populate the utilities
-			double delta_ij = problem.getPoliceUtility(id, blockade);
+			double value = problem.getPoliceUtility(id, blockade);
+			if(problem.isPoliceAgentBlocked(id, blockade)){
+				value += BLOCKED_PENALTY;
+			}
+			agentFactor.setPotential(blockadeID, value);
 			
-			/* modification of the problem for FGMD */
-            if(problem.isPoliceAgentBlocked(id, blockade))
-            {
-            	delta_ij += BLOCKED_PENALTY;
-            }
-            /* end of the modification for FGMD*/
-            
-			
-			double max_delta = problem.getPoliceUtility(id, problem.getHighestTargetForPoliceAgent(id));
-			double utility = -delta_ij*Math.exp(-(delta_ij/max_delta));
-			agentFactor.setPotential(blockadeID, utility);
-			
-			Logger.trace("Utility for {}: {}", new Object[]{blockade, utility});
+			Logger.trace("Utility for {}: {}", new Object[]{blockade, value});
 		}
 		addFactor(new NodeID(id, null), agentFactor);
 	}
@@ -152,8 +140,8 @@ public class FGMDPoliceAgent implements DCOPAgent {
 			BMSCardinalityFactor<NodeID> f = new BMSCardinalityFactor<>();
 			f.setFunction(new CardinalityFactor.CardinalityFunction() {
 				@Override
-				public double getCost(int nActiveVariables){
-					return (nActiveVariables < w_j) ? 0: Double.POSITIVE_INFINITY;
+				public double getCost(int i){
+					return (i>0) ? POLICE_ETA : 0;
 				}
 			});
 			

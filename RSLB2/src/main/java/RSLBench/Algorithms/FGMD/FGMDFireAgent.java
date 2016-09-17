@@ -105,6 +105,14 @@ public class FGMDFireAgent implements DCOPAgent {
 			
 			double delta_ij = problem.getFireUtility(id, fire);
 			double max_delta = problem.getFireUtility(id, problem.getHighestTargetForFireAgent(id));
+			
+			 
+            /* modification of the problem for FGMD */
+            if(problem.isFireAgentBlocked(id, fire)){
+            	delta_ij += problem.getConfig().getFloatValue(Constants.KEY_BLOCKED_FIRE_PENALTY);
+            }
+            /* end of the modification of the problem for FGMD */
+			
 			//and populate the utilities
 			double value = -delta_ij * Math.exp((-delta_ij/max_delta));
 			
@@ -147,7 +155,7 @@ public class FGMDFireAgent implements DCOPAgent {
 			CardinalityFunction wf = new CardinalityFunction(){
 				@Override
 				public double getCost(int nActiveVariables){
-					if(nActiveVariables < 2){
+					if(nActiveVariables < w_j){
 						return 0.0;
 					}else{
 						return (w_j / (nActiveVariables * (nActiveVariables - (w_j - 1))));

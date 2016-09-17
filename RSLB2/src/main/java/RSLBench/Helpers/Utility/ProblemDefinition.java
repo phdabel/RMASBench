@@ -139,7 +139,7 @@ public class ProblemDefinition {
                 }
 
                 double utility = utilityFunction.getFireUtility(agent, target);
-
+               
                 // Apply hysteresis factor if configured
                 if (lastAssignment.getAssignment(agent).equals(target)) {
                     utility *= config.getFloatValue(Constants.KEY_UTIL_HYSTERESIS);
