@@ -34,7 +34,7 @@ public class FGMDPoliceAgent implements DCOPAgent {
 	private static final MaxOperator MIN_OPERATOR = new Minimize();
 	
 	private double BLOCKED_PENALTY;
-	private double POLICE_ETA;
+	//private double POLICE_ETA;
 	
 	private final double w_j = 2.0;
 	
@@ -53,8 +53,8 @@ public class FGMDPoliceAgent implements DCOPAgent {
 		Logger.trace("Initializing agent {}", agentID);
 
         BLOCKED_PENALTY = problem.getConfig().getFloatValue(
-                Constants.KEY_BLOCKED_FIRE_PENALTY);
-        POLICE_ETA = problem.getConfig().getFloatValue(Constants.KEY_POLICE_ETA);
+                Constants.KEY_BLOCKED_POLICE_PENALTY);
+        //POLICE_ETA = problem.getConfig().getFloatValue(Constants.KEY_POLICE_ETA);
 
         this.id = agentID;
         this.targetId = null;

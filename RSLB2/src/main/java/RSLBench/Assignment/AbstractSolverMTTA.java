@@ -29,9 +29,9 @@ import rescuecore2.worldmodel.EntityID;
  * It also collects and writes all the metrics used by the benchmark.
  *
  */
-public abstract class AbstractSolver implements Solver
+public abstract class AbstractSolverMTTA implements Solver
 {
-    private static final Logger Logger = LogManager.getLogger(AbstractSolver.class);
+    private static final Logger Logger = LogManager.getLogger(AbstractSolverMTTA.class);
 
     protected long maxTime;
     protected final Stats stats = new Stats();
@@ -175,19 +175,14 @@ public abstract class AbstractSolver implements Solver
                 continue;
             }
 
-            EntityID highestPoliceTask = problem.getHighestTargetForPoliceAgent(policeAgent);
-            double maxDelta = problem.getPoliceUtility(policeAgent, highestPoliceTask);
-            double delta = problem.getPoliceUtility(policeAgent, target);
-            double u = -delta*Math.exp(-(delta/maxDelta));
-            
+            utility += problem.getPoliceUtility(policeAgent, target);
             if (problem.isPoliceAgentBlocked(policeAgent, target)) {
-                u += POLICE_PENALTY;
+                utility -= POLICE_PENALTY;
             }
-            utility += u;
 
             // Track assignments and violations
             if (blockadesAttended.contains(target)) {
-                return Double.POSITIVE_INFINITY;
+                return Double.NEGATIVE_INFINITY;
             }
             blockadesAttended.add(target);
         }
@@ -197,23 +192,16 @@ public abstract class AbstractSolver implements Solver
         for (EntityID fireAgent : problem.getFireAgents()) {
             EntityID fire = solution.getAssignment(fireAgent);
 
-            EntityID highestFireTask = problem.getHighestTargetForFireAgent(fireAgent);
-            double maxDeltaFire = problem.getFireUtility(fireAgent, highestFireTask);
-            double deltaFire = problem.getFireUtility(fireAgent, fire);
-            double uF = -deltaFire*Math.exp(-(deltaFire/maxDeltaFire));
+            // Individual utility
+            utility += problem.getFireUtility(fireAgent, fire);
 
             // Penalized if the relevant blockade is not attended
             if (problem.isFireAgentBlocked(fireAgent, fire)) {
-            	uF += FIRE_PENALTY;
-                //EntityID blockade = problem.getBlockadeBlockingFireAgent(fireAgent, fire);
-                //if (!INTERTEAM || !blockadesAttended.contains(blockade)) {
-                //    utility -= FIRE_PENALTY;
-                //}
+                EntityID blockade = problem.getBlockadeBlockingFireAgent(fireAgent, fire);
+                if (!INTERTEAM || !blockadesAttended.contains(blockade)) {
+                    utility -= FIRE_PENALTY;
+                }
             }
-            
-            // Individual utility
-            utility += uF;
-
 
             // Add 1 to the target count
             Integer nAgents = nAgentsPerTarget.get(fire);
@@ -223,8 +211,7 @@ public abstract class AbstractSolver implements Solver
         // Finally penalize overassignments of agents to fires
         for (EntityID target : nAgentsPerTarget.keySet()) {
             int assigned = nAgentsPerTarget.get(target);
-            utility += (2/(assigned*(assigned-(2-1))));
-            //utility -= problem.getUtilityPenalty(target, assigned);
+            utility -= problem.getUtilityPenalty(target, assigned);
         }
 
         return utility;

@@ -19,7 +19,7 @@ import rescuecore2.worldmodel.EntityID;
 /**
  * @see AssignmentInterface
  */
-public abstract class DCOPSolver extends AbstractSolver {
+public abstract class DCOPSolverMTTA extends AbstractSolver {
 
     /**
      * The number of iterations max that an algorithm can perform before the
@@ -36,11 +36,11 @@ public abstract class DCOPSolver extends AbstractSolver {
      */
     public static final String KEY_GREEDY_CORRECTION = "dcop.greedy_correction";
 
-    private static final Logger Logger = LogManager.getLogger(DCOPSolver.class);
+    private static final Logger Logger = LogManager.getLogger(DCOPSolverMTTA.class);
     private List<DCOPAgent> agents;
     private List<Double> utilities;
 
-    public DCOPSolver() {
+    public DCOPSolverMTTA() {
         utilities = new ArrayList<>();
     }
 
@@ -116,7 +116,7 @@ public abstract class DCOPSolver extends AbstractSolver {
             }
 
             Logger.trace("Assignment util: {}, values: ", assignmentUtility, finalAssignment);
-            if (assignmentUtility < bestAssignmentUtility || Double.isInfinite(bestAssignmentUtility)) {
+            if (assignmentUtility > bestAssignmentUtility || Double.isInfinite(bestAssignmentUtility)) {
                 bestAssignmentUtility = assignmentUtility;
                 bestAssignment = finalAssignment;
             }
@@ -139,7 +139,7 @@ public abstract class DCOPSolver extends AbstractSolver {
                  finalGreedyU = getUtility(problem, finalGreedy);
         }
         // saftey check, because this should never happen
-        if (finalAssignmentUtility < finalGreedyU) {
+        if (finalAssignmentUtility > finalGreedyU) {
             Logger.error("Final assignment utility went from {} to {}",
                     finalAssignmentUtility, finalGreedyU);
         }
@@ -155,7 +155,7 @@ public abstract class DCOPSolver extends AbstractSolver {
             bestGreedyU = getUtility(problem, bestGreedy);
         }
         // saftey check, because this should never happen
-        if (bestAssignmentUtility < bestGreedyU) {
+        if (bestAssignmentUtility > bestGreedyU) {
             Logger.error("Greedy improvement lowered utility from {} to {}",
                     bestAssignmentUtility, bestGreedyU);
         }
@@ -261,7 +261,7 @@ public abstract class DCOPSolver extends AbstractSolver {
             for (EntityID fire : problem.getFires()) {
                 tested.assign(fireAgent, fire);
                 double utility = getUtility(problem, tested);
-                if (utility < bestUtility) {
+                if (utility > bestUtility) {
                     result.assign(fireAgent, fire);
                     bestUtility = utility;
                 }
@@ -274,7 +274,7 @@ public abstract class DCOPSolver extends AbstractSolver {
             for (EntityID blockade : problem.getBlockades()) {
                 tested.assign(police, blockade);
                 double utility = getUtility(problem, tested);
-                if (utility < bestUtility) {
+                if (utility > bestUtility) {
                     result.assign(police, blockade);
                     bestUtility = utility;
                 }
