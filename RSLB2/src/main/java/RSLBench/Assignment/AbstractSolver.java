@@ -178,6 +178,10 @@ public abstract class AbstractSolver implements Solver
             EntityID highestPoliceTask = problem.getHighestTargetForPoliceAgent(policeAgent);
             double maxDelta = problem.getPoliceUtility(policeAgent, highestPoliceTask);
             double delta = problem.getPoliceUtility(policeAgent, target);
+            if(maxDelta == 0.0)
+            {
+            	maxDelta = 1.0;
+            }
             double u = -delta*Math.exp(-(delta/maxDelta));
             
             if (problem.isPoliceAgentBlocked(policeAgent, target)) {
@@ -200,6 +204,9 @@ public abstract class AbstractSolver implements Solver
             EntityID highestFireTask = problem.getHighestTargetForFireAgent(fireAgent);
             double maxDeltaFire = problem.getFireUtility(fireAgent, highestFireTask);
             double deltaFire = problem.getFireUtility(fireAgent, fire);
+            if(maxDeltaFire == 0.0){
+            	maxDeltaFire = 1.0;
+            }
             double uF = -deltaFire*Math.exp(-(deltaFire/maxDeltaFire));
 
             // Penalized if the relevant blockade is not attended
@@ -223,7 +230,9 @@ public abstract class AbstractSolver implements Solver
         // Finally penalize overassignments of agents to fires
         for (EntityID target : nAgentsPerTarget.keySet()) {
             int assigned = nAgentsPerTarget.get(target);
-            utility += (2/(assigned*(assigned-(2-1))));
+            if(assigned >= 2){
+            	utility += (2/(assigned*(assigned-(2-1))));
+            }
             //utility -= problem.getUtilityPenalty(target, assigned);
         }
 
