@@ -166,7 +166,8 @@ public abstract class AbstractSolverFGMD implements Solver
         final double POLICE_PENALTY = problem.getConfig().getFloatValue(Constants.KEY_BLOCKED_POLICE_PENALTY);
         final double FIRE_PENALTY = problem.getConfig().getFloatValue(Constants.KEY_BLOCKED_FIRE_PENALTY);
         final double w_j = problem.getConfig().getFloatValue(FGMDBinaryMaxSum.FGMD_WORKLOAD);
-
+        final double selfish_penalty = problem.getConfig().getFloatValue(FGMDBinaryMaxSum.FGMD_SELFISH_PENALTY);
+        
         double utility = 0;
 
         HashSet<EntityID> blockadesAttended = new HashSet<>();
@@ -234,6 +235,8 @@ public abstract class AbstractSolverFGMD implements Solver
             int assigned = nAgentsPerTarget.get(target);
             if(assigned >= w_j){
             	utility += (w_j/(assigned*(assigned-(w_j-1))));
+            }else{
+            	utility += selfish_penalty;
             }
             //utility -= problem.getUtilityPenalty(target, assigned);
         }

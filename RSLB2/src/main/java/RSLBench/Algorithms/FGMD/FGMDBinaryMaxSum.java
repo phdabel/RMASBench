@@ -25,6 +25,7 @@ public class FGMDBinaryMaxSum extends DCOPSolver {
 	 */
 	public static final String KEY_MAXSUM_DAMPING = "maxsum.damping";
 	public static final String FGMD_WORKLOAD = "fgmd.workload";
+	public static final String FGMD_SELFISH_PENALTY = "fgmd.selfish_penalty";
 	
 	@Override
 	protected DCOPAgent buildAgent(StandardEntityURN type) {
@@ -50,6 +51,7 @@ public class FGMDBinaryMaxSum extends DCOPSolver {
 		List<String> result = super.getUsedConfigurationKeys();
 		result.add(KEY_MAXSUM_DAMPING);
 		result.add(FGMD_WORKLOAD);
+		result.add(FGMD_SELFISH_PENALTY);
 		return result;
 	}
 
