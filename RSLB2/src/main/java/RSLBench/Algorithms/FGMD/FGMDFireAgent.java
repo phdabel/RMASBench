@@ -37,7 +37,8 @@ public class FGMDFireAgent implements DCOPAgent {
 	
 	private static final MaxOperator MIN_OPERATOR = new Minimize();
 	
-	private final double w_j = 2.0;
+	private double w_j;
+	//private final double w_j = 2.0;
 	
 	private EntityID id;
 	private ProblemDefinition problem;
@@ -61,6 +62,7 @@ public class FGMDFireAgent implements DCOPAgent {
 		this.id = agentID;
 		this.targetId = null;
 		this.problem = problem;
+		this.w_j = config.getFloatValue(FGMDBinaryMaxSum.FGMD_WORKLOAD);
 		
 		//reset internal structures
 		factors = new HashMap<>();
@@ -156,7 +158,7 @@ public class FGMDFireAgent implements DCOPAgent {
 				@Override
 				public double getCost(int nActiveVariables){
 					if(nActiveVariables < w_j){
-						return 0.0;
+						return 1.0;
 					}else{
 						return (w_j / (nActiveVariables * (nActiveVariables - (w_j - 1))));
 					}

@@ -36,7 +36,7 @@ public class FGMDPoliceAgent implements DCOPAgent {
 	private double BLOCKED_PENALTY;
 	//private double POLICE_ETA;
 	
-	private final double w_j = 2.0;
+	private double w_j;
 	
 	private EntityID id;
 	private ProblemDefinition problem;
@@ -59,6 +59,7 @@ public class FGMDPoliceAgent implements DCOPAgent {
         this.id = agentID;
         this.targetId = null;
         this.problem = problem;
+        this.w_j = config.getFloatValue(FGMDBinaryMaxSum.FGMD_WORKLOAD);
 
         // Reset internal structures
         factors = new HashMap<>();

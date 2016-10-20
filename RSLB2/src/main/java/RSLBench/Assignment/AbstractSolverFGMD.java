@@ -30,9 +30,9 @@ import rescuecore2.worldmodel.EntityID;
  * It also collects and writes all the metrics used by the benchmark.
  *
  */
-public abstract class AbstractSolver implements Solver
+public abstract class AbstractSolverFGMD implements Solver
 {
-    private static final Logger Logger = LogManager.getLogger(AbstractSolver.class);
+    private static final Logger Logger = LogManager.getLogger(AbstractSolverFGMD.class);
 
     protected long maxTime;
     protected final Stats stats = new Stats();
@@ -234,8 +234,6 @@ public abstract class AbstractSolver implements Solver
             int assigned = nAgentsPerTarget.get(target);
             if(assigned >= w_j){
             	utility += (w_j/(assigned*(assigned-(w_j-1))));
-            }else{
-            	utility += 1.0;
             }
             //utility -= problem.getUtilityPenalty(target, assigned);
         }

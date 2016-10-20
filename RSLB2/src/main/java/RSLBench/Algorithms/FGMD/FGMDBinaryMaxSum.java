@@ -24,6 +24,7 @@ public class FGMDBinaryMaxSum extends DCOPSolver {
 	 *  The damping factor to employ
 	 */
 	public static final String KEY_MAXSUM_DAMPING = "maxsum.damping";
+	public static final String FGMD_WORKLOAD = "fgmd.workload";
 	
 	@Override
 	protected DCOPAgent buildAgent(StandardEntityURN type) {
@@ -48,6 +49,7 @@ public class FGMDBinaryMaxSum extends DCOPSolver {
 	public List<String> getUsedConfigurationKeys(){
 		List<String> result = super.getUsedConfigurationKeys();
 		result.add(KEY_MAXSUM_DAMPING);
+		result.add(FGMD_WORKLOAD);
 		return result;
 	}
 
